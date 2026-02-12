@@ -1,0 +1,7 @@
+<ul class="category-list">
+  <li *ngFor="let cat of categories" class="category-item">
+    <span>{{cat.name}}</span>
+    <span class="icon" *ngIf="cat.icon === 'arrow'">→</span>
+    <span class="icon" *ngIf="cat.icon === 'edit'">✎</span>
+  </li>
+</ul>

@@ -1,0 +1,20 @@
+<div class="product-filters">
+  <div class="filters-left">
+    <h2>Showing {{totalResults}} results for total {{totalAvailable}} for "{{searchTerm}}"</h2>
+    <div class="active-filters">
+      <span class="filter-label">Applied Filters:</span>
+      <span class="filter-tag" *ngFor="let filter of activeFilters; let i = index">
+        {{filter.label}} 
+        <button class="remove-filter" (click)="removeFilter(i)">×</button>
+      </span>
+    </div>
+  </div>
+  <div class="sort-by">
+    <span>Sort by</span>
+    <select [(ngModel)]="selectedSort">
+      <option *ngFor="let option of sortOptions" [value]="option.value">
+        {{option.label}}
+      </option>
+    </select>
+  </div>
+</div>

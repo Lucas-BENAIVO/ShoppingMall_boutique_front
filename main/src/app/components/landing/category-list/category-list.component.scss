@@ -1,0 +1,23 @@
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.category-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 1.08rem;
+  font-weight: 500;
+  color: #222;
+}
+.category-item:last-child {
+  border-bottom: none;
+}
+.icon {
+  font-size: 1.2rem;
+  color: #888;
+}

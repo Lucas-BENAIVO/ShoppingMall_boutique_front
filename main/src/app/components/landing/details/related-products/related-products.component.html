@@ -1,0 +1,23 @@
+<div class="related-products">
+  <div class="header">
+    <h2>Produits similaires</h2>
+    <a [routerLink]="['/landing/produit']" class="view-all">
+      Tous les produits
+      <iconify-icon icon="ph:arrow-right"></iconify-icon>
+    </a>
+  </div>
+
+  <div class="products-grid">
+    <a *ngFor="let product of products" [routerLink]="['/landing/produit', product.id]" class="product-card">
+      <div class="add-button">+</div>
+      <div class="product-image">
+        <img [src]="product.image || 'assets/images/products/placeholder.jpg'" [alt]="product.name">
+      </div>
+      <div class="product-details">
+        <h3>{{ product.name }}</h3>
+        <p class="color">{{ product.color }}</p>
+        <p class="price">€{{ product.price.toFixed(2) }}</p>
+      </div>
+    </a>
+  </div>
+</div>

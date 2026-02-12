@@ -1,0 +1,14 @@
+<div class="featured-products-container">
+  <div class="featured-products">
+    <div class="featured-card" *ngFor="let product of products">
+      <div class="featured-image">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+      <div class="featured-info">
+        <h3 class="featured-name">{{ product.name }}</h3>
+        <p class="featured-subtitle">{{ product.subtitle }}</p>
+        <p class="featured-price">{{ product.price }}</p>
+      </div>
+    </div>
+  </div>
+</div>

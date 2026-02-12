@@ -1,0 +1,85 @@
+<aside class="category-sidebar">
+  <!-- Section Catégories -->
+  <div class="filter-section">
+    <h3 (click)="toggleCategories()" class="filter-header">
+      Catégorie 
+      <span class="toggle-icon" [class.expanded]="isCategoriesExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isCategoriesExpanded" [@slideDown]>
+      <ng-container *ngFor="let category of categories">
+        <label [class.selected]="category.checked" (click)="toggleCategory(category)">
+          <input type="checkbox" [checked]="category.checked"> 
+          <span [innerHTML]="category.checked ? '<strong>' + category.name + '</strong>' : category.name"></span>
+          <span class="count" *ngIf="category.count">{{category.count}}</span>
+        </label>
+        <ng-container *ngIf="category.subcategories">
+          <label *ngFor="let sub of category.subcategories" 
+                 [class.selected]="sub.checked" 
+                 class="subcategory"
+                 (click)="toggleSubcategory(sub)">
+            <input type="checkbox" [checked]="sub.checked"> 
+            <span [innerHTML]="sub.checked ? '<strong>' + sub.name + '</strong>' : sub.name"></span>
+            <span class="count" *ngIf="sub.count">{{sub.count}}</span>
+          </label>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+  
+  <!-- Section Marques -->
+  <div class="filter-section">
+    <h3 (click)="toggleBrands()" class="filter-header">
+      Marques 
+      <span class="toggle-icon" [class.expanded]="isBrandsExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isBrandsExpanded">
+      <label *ngFor="let brand of brands" 
+             [class.selected]="brand.checked"
+             (click)="toggleBrand(brand)">
+        <input type="checkbox" [checked]="brand.checked"> 
+        {{brand.name}}
+        <span class="count">{{brand.count}}</span>
+      </label>
+    </div>
+  </div>
+  
+  <!-- Section Prix -->
+  <div class="filter-section">
+    <h3 (click)="togglePrice()" class="filter-header">
+      Prix 
+      <span class="toggle-icon" [class.expanded]="isPriceExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isPriceExpanded">
+      <label *ngFor="let range of priceRanges" 
+             [class.selected]="range.checked"
+             (click)="togglePriceRange(range)">
+        <input type="checkbox" [checked]="range.checked"> 
+        {{range.label}}
+      </label>
+    </div>
+  </div>
+  
+  <!-- Section Taille -->
+  <div class="filter-section">
+    <h3 (click)="toggleSizeSection()" class="filter-header">
+      Taille 
+      <span class="toggle-icon" [class.expanded]="isSizeExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isSizeExpanded">
+      <label *ngFor="let size of sizes" 
+             [class.selected]="size.checked"
+             (click)="toggleSize(size)">
+        <input type="checkbox" [checked]="size.checked"> 
+        {{size.name}}
+      </label>
+    </div>
+  </div>
+</aside>

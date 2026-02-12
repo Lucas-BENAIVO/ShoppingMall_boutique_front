@@ -1,0 +1,19 @@
+<app-navbar></app-navbar>
+
+<div class="breadcrumb-container">
+  <div class="breadcrumb">
+    <a href="/landing" class="breadcrumb-link">Page d'accueil</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">Catalogue</span>
+  </div>
+</div>
+
+<div class="produit-page-layout" style="display: flex; gap: 32px; align-items: flex-start;">
+  <app-category-sidebar></app-category-sidebar>
+  <div style="flex: 1;">
+    <app-product-filters></app-product-filters>
+    <app-product-list></app-product-list>
+    <app-product-pagination></app-product-pagination>
+  </div>
+</div>
+<app-footer></app-footer>

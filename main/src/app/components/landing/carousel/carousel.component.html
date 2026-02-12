@@ -1,0 +1,14 @@
+<div class="carousel mercedes-carousel">
+  <img class="carousel-bg" [src]="images[current]" alt="Image du carrousel" />
+  <div class="carousel-overlay">
+    <div class="carousel-content">
+      <div class="carousel-line"></div>
+      <div class="carousel-event">OFFRE</div>
+      <div class="carousel-title main-title">PROFITEZ DE PLUSIEURS BOUTIQUES.</div>
+      <div class="carousel-desc">Découvrez une expérience shopping unique et faites-vous livrer vos achats en toute simplicité.</div>
+      <button class="carousel-btn">DÉCOUVRIR</button>
+    </div>
+    <button class="carousel-arrow left" (click)="prev(); stopAutoSlide()">&#10094;</button>
+    <button class="carousel-arrow right" (click)="next(); stopAutoSlide()">&#10095;</button>
+  </div>
+</div>
