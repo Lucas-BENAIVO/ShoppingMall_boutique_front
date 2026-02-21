@@ -3,9 +3,7 @@
   
   <div class="main-content">
     <div class="content-wrapper">
-      <div class="dashboard-header">
-        <h1>Dashboard</h1>
-      </div>
+      <!-- En-tête Dashboard supprimé -->
 
       <!-- Stats Cards Grid -->
       <div class="stats-grid">
@@ -21,6 +19,19 @@
           [actionLabel]="stat.actionLabel"
           [actionColor]="stat.actionColor">
         </app-stat-card>
+      </div>
+
+      <!-- Statistiques graphiques sous les cards -->
+      <div class="dashboard-stats-graphs statistiques-page">
+        <div class="statistiques-graphiques">
+          <div class="graphiques-row">
+            <div class="graphe-container"><app-top-produits></app-top-produits></div>
+            <div class="graphe-container"><app-ventes-par-jour></app-ventes-par-jour></div>
+          </div>
+          <div class="graphiques-row">
+            <div class="graphe-container graphe-seul"><app-top-clients></app-top-clients></div>
+          </div>
+        </div>
       </div>
     </div>
     

@@ -7,9 +7,9 @@
     </div>
   </div>
 
-  <!-- Main Menu Section -->
+  <!-- Section Menu Principal -->
   <div class="menu-section">
-    <p class="section-title">MAIN MENU</p>
+    <p class="section-title">MENU PRINCIPAL</p>
     <nav>
       <ul class="menu-list">
         <li *ngFor="let item of menuItems" 
@@ -18,16 +18,16 @@
           <a [routerLink]="item.route" class="menu-item">
             <mat-icon class="menu-icon">{{ item.icon }}</mat-icon>
             <span class="menu-label">{{ item.label }}</span>
-            <span *ngIf="item.badge" class="badge">{{ item.badge }}</span>
+            <!-- badge supprimé car non utilisé -->
           </a>
         </li>
       </ul>
     </nav>
   </div>
 
-  <!-- Account Management Section -->
+  <!-- Section Gestion de stock -->
   <div class="menu-section">
-    <p class="section-title">ACCOUNT MANAGEMENT</p>
+    <p class="section-title">GESTION DE STOCK</p>
     <nav>
       <ul class="menu-list">
         <li *ngFor="let item of accountItems" 
@@ -39,7 +39,7 @@
               {{ item.expanded ? 'expand_less' : 'expand_more' }}
             </mat-icon>
           </div>
-          <!-- Submenu -->
+          <!-- Sous-menu -->
           <ul class="submenu" *ngIf="item.expandable && item.expanded">
             <li *ngFor="let subItem of item.subItems">
               <a [routerLink]="subItem.route" class="submenu-item">
@@ -52,7 +52,7 @@
     </nav>
   </div>
 
-  <!-- Settings Section -->
+  <!-- Section Paramètres -->
   <div class="menu-section settings-section">
     <nav>
       <ul class="menu-list">

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MaterialModule } from '../../../material.module';
@@ -10,54 +11,40 @@ import { MaterialModule } from '../../../material.module';
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   menuItems = [
     {
       icon: 'home',
-      label: 'Home',
-      route: '/boutique',
+      label: 'Tableau de bord',
+      route: '/boutique/dashboard',
       active: true
     },
     {
-      icon: 'message',
-      label: 'Message',
-      route: '/boutique/messages',
-      badge: 2,
+      icon: 'inventory_2',
+      label: 'Produits',
+      route: '/boutique/produits',
       active: false
     },
     {
-      icon: 'analytics',
-      label: 'Analytics',
-      route: '/boutique/analytics',
-      active: false
-    },
-    {
-      icon: 'receipt',
-      label: 'Transaction',
-      route: '/boutique/transactions',
-      active: false
-    },
-    {
-      icon: 'payment',
-      label: 'Payment',
-      route: '/boutique/payment',
-      badge: 2,
+      icon: 'shopping_cart',
+      label: 'Commandes',
+      route: '/boutique/commandes',
       active: false
     }
   ];
 
   accountItems = [
     {
-      icon: 'local_activity',
-      label: 'Activity',
-      route: '/boutique/activity',
+      icon: 'warehouse',
+      label: 'Gestion de stock',
+      route: '/boutique/stock',
       expandable: true,
       expanded: false,
       active: false,
       subItems: [
-        { label: 'Balance', route: '/boutique/balance' },
-        { label: 'Spending', route: '/boutique/spending' },
-        { label: 'Refund', route: '/boutique/refund' }
+        { label: 'Inventaire', route: '/boutique/inventaire' },
+        { label: 'Dépenses', route: '/boutique/depenses' },
+        { label: 'Remboursement', route: '/boutique/remboursement' }
       ]
     }
   ];
@@ -65,29 +52,72 @@ export class SidebarComponent {
   settingsItems = [
     {
       icon: 'settings',
-      label: 'Setting',
-      route: '/boutique/settings',
+      label: 'Paramètres',  
+      route: '/boutique/parametres',
       active: false
     },
     {
       icon: 'logout',
-      label: 'Log out',
+      label: 'Déconnexion',
       route: '/authentication/login',
       active: false
     }
   ];
 
-  toggleExpand(item: any) {
+  constructor(private router: Router) {}
+
+  toggleExpand(item: any): void {
     item.expanded = !item.expanded;
   }
 
-  setActive(item: any) {
-    // Reset all menu items
-    this.menuItems.forEach(m => m.active = false);
-    this.accountItems.forEach(m => m.active = false);
-    this.settingsItems.forEach(m => m.active = false);
-    
-    // Set the clicked item as active
+  setActive(item: any): void {
+    this.resetActive();
     item.active = true;
+  }
+
+  resetActive(): void {
+    this.menuItems.forEach((m: any) => m.active = false);
+    this.accountItems.forEach((m: any) => m.active = false);
+    this.settingsItems.forEach((m: any) => m.active = false);
+  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe((event: any) => {
+      if (event instanceof NavigationEnd) {
+        this.updateActiveByRoute(event.urlAfterRedirects);
+      }
+    });
+    // Initial activation
+    this.updateActiveByRoute(this.router.url);
+  }
+
+  updateActiveByRoute(url: string): void {
+    this.resetActive();
+    // Menu principal
+    this.menuItems.forEach((item: any) => {
+      if (url.startsWith(item.route)) {
+        item.active = true;
+      }
+    });
+    // Gestion de stock
+    this.accountItems.forEach((item: any) => {
+      if (url.startsWith(item.route)) {
+        item.active = true;
+      }
+      if (item.subItems) {
+        item.subItems.forEach((sub: any) => {
+          if (url.startsWith(sub.route)) {
+            item.active = true;
+            item.expanded = true;
+          }
+        });
+      }
+    });
+    // Paramètres
+    this.settingsItems.forEach((item: any) => {
+      if (url.startsWith(item.route)) {
+        item.active = true;
+      }
+    });
   }
 }

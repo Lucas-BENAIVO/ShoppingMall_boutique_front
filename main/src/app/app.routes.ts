@@ -42,7 +42,7 @@ export const routes: Routes = [
       },
       {
         path: 'authentication',
-        loadChildren: () =>
+        loadChildren: () =>       
           import('./pages/authentication/authentication.routes').then(
             (m) => m.AuthenticationRoutes
           ),

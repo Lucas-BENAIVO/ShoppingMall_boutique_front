@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+  import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../../material.module';
 
@@ -10,6 +10,9 @@ import { MaterialModule } from '../../../material.module';
   styleUrls: ['./stat-card.component.scss']
 })
 export class StatCardComponent {
+    isPositiveChange(): boolean {
+      return this.changeType === 'positive';
+    }
   @Input() icon: string = '';
   @Input() iconColor: string = '#5d87ff';
   @Input() label: string = '';
