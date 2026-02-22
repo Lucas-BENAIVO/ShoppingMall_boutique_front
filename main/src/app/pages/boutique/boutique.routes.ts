@@ -1,19 +1,24 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProduitsPage } from './produits/produits.page';
-import { CommandesPageComponent } from './commandes/commandes.page';
 
 export const BoutiqueRoutes: Routes = [
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadComponent: () => import('./dashboard/dashboard.component').then(m => m.DashboardComponent),
   },
   {
     path: 'produits',
-    component: ProduitsPage,
+    loadComponent: () => import('./produits/produits.page').then(m => m.ProduitsPage),
   },
   {
     path: 'commandes',
-    component: CommandesPageComponent,
+    loadComponent: () => import('./commandes/commandes.page').then(m => m.CommandesPageComponent),
+  },
+  {
+    path: 'promotions',
+    loadComponent: () => import('./promotions/promotions.page').then(m => m.PromotionsPageComponent),
+  },
+  {
+    path: 'profile',
+    loadComponent: () => import('./profile/profile.page').then(m => m.ProfilePageComponent),
   },
 ];

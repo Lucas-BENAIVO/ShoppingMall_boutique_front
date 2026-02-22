@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SidebarComponent } from '../../../components/boutique/sidebar/sidebar.component';
+import { BoutiqueNavbarComponent } from '../../../components/boutique/boutique-navbar/boutique-navbar.component';
 import { FooterComponent } from '../../../components/boutique/footer/footer.component';
 import { StatCardComponent } from '../../../components/boutique/stat-card/stat-card.component';
 import { TopProduitsComponent } from '../../../components/boutique/top-produits/top-produits.component';
@@ -10,7 +11,7 @@ import { TopClientsComponent } from '../../../components/boutique/top-clients/to
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, SidebarComponent, FooterComponent, StatCardComponent, TopProduitsComponent, VentesParJourComponent, TopClientsComponent],
+  imports: [CommonModule, SidebarComponent, BoutiqueNavbarComponent, FooterComponent, StatCardComponent, TopProduitsComponent, VentesParJourComponent, TopClientsComponent],
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

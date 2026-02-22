@@ -30,6 +30,12 @@ export class SidebarComponent implements OnInit {
       label: 'Commandes',
       route: '/boutique/commandes',
       active: false
+    },
+    {
+      icon: 'tune',
+      label: 'Configuration',
+      route: '/boutique/promotions',
+      active: false
     }
   ];
 
@@ -53,7 +59,7 @@ export class SidebarComponent implements OnInit {
     {
       icon: 'settings',
       label: 'Paramètres',  
-      route: '/boutique/parametres',
+      route: '/boutique/profile',
       active: false
     },
     {
