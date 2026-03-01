@@ -21,7 +21,7 @@
               "bezier-easing"
             ],
             "outputPath": {
-              "base": "dist/Modernize"
+              "base": "dist/m1p13mean-lucas-henintsoa-boutique"
             },
             "index": "src/index.html",
             "polyfills": [
