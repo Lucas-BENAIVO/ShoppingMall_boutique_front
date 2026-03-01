@@ -2,3 +2,134 @@
 
 html, body { height: 100%; background: #fff; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; background: #fff; }
+
+/* ========== GLOBAL RESPONSIVE UTILITIES ========== */
+
+// Container responsive
+.container, .main-content, .content-wrapper, .page-content {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+// Images responsives
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Tables responsives
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Grilles responsives
+.grid, .products-grid, .cards-grid {
+  display: grid;
+  gap: 16px;
+}
+
+/* ========== MEDIA QUERIES ========== */
+
+// Extra Large (Desktop > 1200px)
+@media (min-width: 1200px) {
+  .container, .main-content { padding: 0 24px; }
+  .grid, .products-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+// Large (Desktop 992px - 1199px)
+@media (max-width: 1199px) {
+  .container, .main-content { padding: 0 20px; }
+  .grid, .products-grid { grid-template-columns: repeat(3, 1fr); }
+  
+  .sidebar { width: 220px; }
+}
+
+// Medium (Tablet 768px - 991px)
+@media (max-width: 991px) {
+  .container, .main-content { padding: 0 16px; }
+  .grid, .products-grid { grid-template-columns: repeat(2, 1fr); }
+  
+  // Sidebar passe en dessous ou caché
+  .layout-with-sidebar {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    position: relative;
+  }
+  
+  // Navbar adaptations
+  .navbar-links { display: none; }
+  .mobile-menu-btn { display: block !important; }
+  
+  // Tables
+  table { font-size: 0.9rem; }
+}
+
+// Small (Mobile landscape 576px - 767px)
+@media (max-width: 767px) {
+  .container, .main-content { padding: 0 12px; }
+  .grid, .products-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.3rem; }
+  h3 { font-size: 1.1rem; }
+  
+  // Cards plus compactes
+  .card, .product-card {
+    padding: 12px;
+  }
+  
+  // Buttons fullwidth
+  .btn-responsive { width: 100%; }
+  
+  // Modal fullscreen
+  .modal-content {
+    width: 95% !important;
+    max-width: none !important;
+    margin: 10px;
+  }
+}
+
+// Extra Small (Mobile portrait < 576px)
+@media (max-width: 575px) {
+  .container, .main-content { padding: 0 8px; }
+  .grid, .products-grid { grid-template-columns: 1fr; gap: 10px; }
+  
+  h1 { font-size: 1.3rem; }
+  h2 { font-size: 1.15rem; }
+  h3 { font-size: 1rem; }
+  
+  // Form inputs fullwidth
+  input, select, textarea {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  // Flex column on mobile
+  .flex-responsive {
+    flex-direction: column;
+  }
+  
+  // Hide on mobile
+  .hide-mobile { display: none !important; }
+  
+  // Show on mobile
+  .show-mobile { display: block !important; }
+}
+
+// Utility classes for visibility
+.hide-desktop { display: none; }
+.show-desktop { display: block; }
+
+@media (max-width: 991px) {
+  .hide-tablet { display: none !important; }
+  .show-tablet { display: block !important; }
+  .hide-desktop { display: block; }
+  .show-desktop { display: none; }
+}

@@ -1,0 +1,78 @@
+<app-navbar></app-navbar>
+
+<div class="boutiques-page" style="min-height: 100vh; background: #fafafa; padding: 60px 0;">
+  <div class="container" style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+    
+    <!-- Header -->
+    <div class="page-header" style="text-align: center; margin-bottom: 56px;">
+      <h1 style="font-size: 2.8em; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; letter-spacing: -1px;">Nos Boutiques</h1>
+      <p style="color: #666; font-size: 1.15em; max-width: 500px; margin: 0 auto;">Découvrez toutes les boutiques partenaires de notre marketplace</p>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" style="text-align: center; padding: 80px;">
+      <p style="color: #666;">Chargement des boutiques...</p>
+    </div>
+
+    <!-- Error -->
+    <div *ngIf="errorMessage && !isLoading" style="text-align: center; padding: 80px; color: #333;">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="!isLoading && !errorMessage && boutiques.length === 0" style="text-align: center; padding: 80px;">
+      <p style="font-size: 1.2em; color: #666;">Aucune boutique disponible pour le moment.</p>
+    </div>
+
+    <!-- Boutiques Grid -->
+    <div *ngIf="!isLoading && boutiques.length > 0" class="boutiques-grid" 
+         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px;">
+      
+      <a *ngFor="let boutique of boutiques" 
+         [routerLink]="['/landing/boutique', boutique._id]"
+         class="boutique-card"
+         style="background: white; border-radius: 8px; overflow: hidden; border: 1px solid #e5e5e5; text-decoration: none; color: inherit; transition: all 0.3s ease; cursor: pointer;"
+         onmouseover="this.style.transform='translateY(-6px)'; this.style.boxShadow='0 16px 48px rgba(0,0,0,0.1)'; this.style.borderColor='#ccc'"
+         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'; this.style.borderColor='#e5e5e5'">
+        
+        <!-- Banner -->
+        <div class="boutique-banner" 
+             style="height: 140px; background: linear-gradient(135deg, #1a1a1a 0%, #333 100%); position: relative;">
+          <img *ngIf="boutique.banner" [src]="boutique.banner" alt="" 
+               style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+        
+        <!-- Logo -->
+        <div style="position: relative; padding: 0 24px;">
+          <div class="boutique-logo" 
+               style="width: 88px; height: 88px; border-radius: 8px; background: white; border: 3px solid white; position: absolute; top: -44px; left: 24px; overflow: hidden; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.12);">
+            <img *ngIf="boutique.logo" [src]="boutique.logo" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+            <span *ngIf="!boutique.logo" style="font-size: 32px; font-weight: 700; color: #1a1a1a;">{{ boutique.name.charAt(0) }}</span>
+          </div>
+        </div>
+        
+        <!-- Info -->
+        <div class="boutique-info" style="padding: 56px 24px 24px;">
+          <h3 style="font-size: 1.35em; font-weight: 600; margin: 0 0 10px; color: #1a1a1a; letter-spacing: -0.3px;">{{ boutique.name }}</h3>
+          <p *ngIf="boutique.description" 
+             style="color: #666; font-size: 0.95em; margin: 0 0 14px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+            {{ boutique.description }}
+          </p>
+          <div style="display: flex; align-items: center; gap: 16px; color: #888; font-size: 0.85em;">
+            <span *ngIf="boutique.address" style="display: flex; align-items: center; gap: 6px;">
+              <span class="material-icons" style="font-size: 16px; color: #555;">location_on</span>
+              {{ boutique.address }}
+            </span>
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <div style="padding: 18px 24px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+          <span style="color: #1a1a1a; font-weight: 600; font-size: 0.9em; letter-spacing: 0.5px;">VOIR LA BOUTIQUE →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

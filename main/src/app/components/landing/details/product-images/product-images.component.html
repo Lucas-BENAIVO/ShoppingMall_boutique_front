@@ -1,0 +1,13 @@
+<div class="product-images">
+  <div class="thumbnails">
+    <div *ngFor="let thumb of thumbnails; let i = index" 
+         class="thumbnail" 
+         [class.active]="i === selectedIndex"
+         (click)="selectImage(i)">
+      <img [src]="thumb || 'assets/images/products/placeholder.jpg'" alt="Product thumbnail">
+    </div>
+  </div>
+  <div class="main-image">
+    <img [src]="mainImage || 'assets/images/products/placeholder.jpg'" alt="Product main image">
+  </div>
+</div>

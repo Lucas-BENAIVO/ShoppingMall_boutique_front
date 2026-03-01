@@ -1,0 +1,7 @@
+.boutique-detail-page {
+  min-height: 100vh;
+  
+  .product-card:hover img {
+    transform: scale(1.05);
+  }
+}

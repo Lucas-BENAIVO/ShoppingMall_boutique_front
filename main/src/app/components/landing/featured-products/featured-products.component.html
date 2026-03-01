@@ -1,0 +1,16 @@
+<div class="featured-products-container">
+  <div class="featured-products">
+    <a class="featured-card" *ngFor="let product of products" 
+       [routerLink]="product._id ? ['/landing/produit', product._id] : null"
+       [style.cursor]="product._id ? 'pointer' : 'default'">
+      <div class="featured-image">
+        <img [src]="product.image" [alt]="product.name" />
+      </div>
+      <div class="featured-info">
+        <h3 class="featured-name">{{ product.name }}</h3>
+        <p class="featured-subtitle">{{ product.subtitle }}</p>
+        <p class="featured-price">{{ product.price }}</p>
+      </div>
+    </a>
+  </div>
+</div>

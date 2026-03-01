@@ -1,0 +1,140 @@
+<nav class="navbar">
+    <div class="navbar-logo">
+        <a href="/landing">
+            <img src="/assets/images/logos/galleria.png" alt="NOSTRA Logo" style="height: 32px; width: auto;" />
+        </a>
+    </div>
+    <ul class="navbar-menu">
+        <!-- Boutique dropdown -->
+        <li class="menu-item dropdown" style="position: relative;">
+            <span (click)="toggleBoutiqueDropdown()" style="cursor: pointer; display: flex; align-items: center;">
+                Boutique <span class="material-icons" style="font-size:1.1em;vertical-align:middle;">expand_more</span>
+            </span>
+            <div *ngIf="isBoutiqueDropdownOpen" class="boutique-dropdown" 
+                 style="position: absolute; top: 100%; left: 0; background: white; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); min-width: 250px; z-index: 1000; margin-top: 8px; padding: 8px 0;">
+                <div *ngIf="boutiques.length === 0" style="padding: 16px; text-align: center; color: #666;">
+                    Aucune boutique disponible
+                </div>
+                <a *ngFor="let boutique of boutiques" 
+                   (click)="selectBoutique(boutique._id)"
+                   style="display: flex; align-items: center; padding: 12px 16px; text-decoration: none; color: #333; cursor: pointer; transition: background 0.2s;"
+                   onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+                    <div style="width: 36px; height: 36px; border-radius: 50%; background: #eee; margin-right: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+                        <img *ngIf="boutique.logo" [src]="boutique.logo" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        <span *ngIf="!boutique.logo" style="font-size: 14px; font-weight: 600;">{{ boutique.name.charAt(0) }}</span>
+                    </div>
+                    <div>
+                        <div style="font-weight: 500;">{{ boutique.name }}</div>
+                        <div *ngIf="boutique.description" style="font-size: 0.75em; color: #666; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ boutique.description }}</div>
+                    </div>
+                </a>
+                <div style="border-top: 1px solid #eee; margin-top: 8px; padding-top: 8px;">
+                    <a [routerLink]="['/landing/boutiques']" (click)="isBoutiqueDropdownOpen = false"
+                       style="display: block; padding: 12px 16px; text-decoration: none; color: #007bff; font-weight: 500;">
+                        Voir toutes les boutiques →
+                    </a>
+                </div>
+            </div>
+        </li>
+        <li class="menu-item" [routerLink]="['/landing/produit']" style="cursor: pointer;">Catalogue</li>
+        <li class="menu-item" [routerLink]="['/landing/produit']" [queryParams]="{sort: 'popular'}" style="cursor: pointer;">Les plus recherchés</li>
+        <li class="menu-item" [routerLink]="['/landing/produit']" [queryParams]="{sort: 'newest'}" style="cursor: pointer;">Nouveautés</li>
+    </ul>
+    <div class="navbar-actions">
+        <!-- Search with dropdown results -->
+        <div class="navbar-search" style="position: relative;">
+            <span class="material-icons search-icon">search</span>
+            <input type="text" 
+                   placeholder="Rechercher produits, boutiques..." 
+                   [(ngModel)]="searchQuery"
+                   (input)="onSearchInput()"
+                   (keyup.enter)="onSearchSubmit()"
+                   (blur)="closeSearchResults()" />
+            
+            <!-- Search Results Dropdown -->
+            <div *ngIf="showSearchResults && (searchResults.products.length > 0 || searchResults.boutiques.length > 0)" 
+                 class="search-results-dropdown"
+                 style="position: absolute; top: 100%; left: 0; right: 0; background: white; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); max-height: 400px; overflow-y: auto; z-index: 1001; margin-top: 8px;">
+                
+                <!-- Boutiques -->
+                <div *ngIf="searchResults.boutiques.length > 0">
+                    <div style="padding: 8px 16px; font-size: 0.75em; font-weight: 600; color: #666; background: #f9f9f9;">BOUTIQUES</div>
+                    <a *ngFor="let boutique of searchResults.boutiques.slice(0, 3)" 
+                       (mousedown)="selectBoutique(boutique._id)"
+                       style="display: flex; align-items: center; padding: 10px 16px; text-decoration: none; color: #333; cursor: pointer;"
+                       onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+                        <span class="material-icons" style="margin-right: 10px; color: #666;">store</span>
+                        <span>{{ boutique.name }}</span>
+                    </a>
+                </div>
+                
+                <!-- Produits -->
+                <div *ngIf="searchResults.products.length > 0">
+                    <div style="padding: 8px 16px; font-size: 0.75em; font-weight: 600; color: #666; background: #f9f9f9;">PRODUITS</div>
+                    <a *ngFor="let product of searchResults.products.slice(0, 5)" 
+                       (mousedown)="selectProduct(product._id)"
+                       style="display: flex; align-items: center; padding: 10px 16px; text-decoration: none; color: #333; cursor: pointer;"
+                       onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background='transparent'">
+                        <div style="width: 40px; height: 40px; background: #eee; border-radius: 4px; margin-right: 12px; overflow: hidden;">
+                            <img *ngIf="product.images?.[0] || product.image" [src]="product.images?.[0] || product.image" alt="" style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div>
+                            <div style="font-weight: 500;">{{ product.name }}</div>
+                            <div style="font-size: 0.85em; color: #007bff;">{{ product.price }} Ar</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Voir tous les résultats -->
+                <div style="border-top: 1px solid #eee; padding: 12px 16px;">
+                    <a (mousedown)="onSearchSubmit()" style="color: #007bff; text-decoration: none; font-weight: 500; cursor: pointer;">
+                        Voir tous les résultats pour "{{ searchQuery }}" →
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Loading indicator -->
+            <div *ngIf="isSearching" style="position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 16px; text-align: center; border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,0.15); margin-top: 8px;">
+                Recherche en cours...
+            </div>
+        </div>
+        <!-- <span class="material-icons action-icon">shopping_cart</span> -->
+         <div class="cart-icon-wrapper" (click)="toggleCart()">
+           <span class="iconify action-icon" data-icon="solar:cart-large-outline" style="font-size: 2em; cursor: pointer;"></span>
+           <span *ngIf="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
+         </div>
+         
+         <!-- User Menu -->
+         <div class="user-menu-wrapper" style="position: relative;">
+           <div *ngIf="!currentUser" style="display: flex; align-items: center; cursor: pointer;">
+             <a [routerLink]="['/authentication/login']" style="display: flex; align-items: center;">
+               <span class="iconify" data-icon="solar:user-circle-bold" style="font-size: 2em;"></span>
+             </a>
+           </div>
+           
+           <div *ngIf="currentUser" (click)="toggleUserMenu()" style="display: flex; align-items: center; cursor: pointer; gap: 8px;">
+             <span class="iconify" data-icon="solar:user-circle-bold" style="font-size: 2em; color: #4CAF50;"></span>
+             <span style="font-size: 0.9em; font-weight: 500;">{{ currentUser.fullName }}</span>
+           </div>
+           
+           <!-- Dropdown menu -->
+           <div *ngIf="currentUser && isUserMenuOpen" class="user-dropdown" style="position: absolute; top: 100%; right: 0; background: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); min-width: 180px; z-index: 1000; margin-top: 8px;">
+             <div style="padding: 12px 16px; border-bottom: 1px solid #eee;">
+               <div style="font-weight: 600;">{{ currentUser.fullName }}</div>
+               <div style="font-size: 0.8em; color: #666;">{{ currentUser.role }}</div>
+             </div>
+             <a [routerLink]="['/dashboard']" style="display: block; padding: 12px 16px; text-decoration: none; color: #333;">
+               <span class="iconify" data-icon="solar:home-outline" style="margin-right: 8px;"></span>
+               Mon compte
+             </a>
+             <button (click)="logout()" style="width: 100%; padding: 12px 16px; border: none; background: none; text-align: left; cursor: pointer; color: #dc3545;">
+               <span class="iconify" data-icon="solar:logout-outline" style="margin-right: 8px;"></span>
+               Se déconnecter
+             </button>
+           </div>
+         </div>
+    </div>
+</nav>
+
+<app-shopping-cart *ngIf="isCartOpen" (close)="closeCart()"></app-shopping-cart>
+

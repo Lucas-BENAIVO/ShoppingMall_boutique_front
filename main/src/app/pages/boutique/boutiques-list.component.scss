@@ -1,0 +1,12 @@
+.boutiques-page {
+  min-height: 100vh;
+  
+  .boutique-card:hover .boutique-banner img {
+    transform: scale(1.05);
+    transition: transform 0.4s ease;
+  }
+  
+  .boutique-banner img {
+    transition: transform 0.4s ease;
+  }
+}

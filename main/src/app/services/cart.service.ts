@@ -3,7 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export interface CartItem {
   id: number;
-  productId: number;
+  productId: string;
+  boutiqueId: string;
   name: string;
   category: string;
   size: string;
@@ -69,7 +70,8 @@ export class CartService {
       // Ajouter un nouveau produit
       const newItem: CartItem = {
         id: Date.now(), // ID unique basé sur timestamp
-        productId: product.id || 1,
+        productId: product.id || '',
+        boutiqueId: product.boutiqueId || '',
         name: product.name || 'Produit',
         category: product.category || 'PRODUCT',
         size: selectedSize,

@@ -1,0 +1,175 @@
+<div class="cart-overlay" (click)="onClose()"></div>
+
+<div class="cart-modal">
+  <div class="cart-header">
+    <button class="back-button" (click)="onClose()">
+      <iconify-icon icon="ph:arrow-left"></iconify-icon>
+      RETOUR À LA BOUTIQUE
+    </button>
+    <button class="close-button" (click)="onClose()">
+      <iconify-icon icon="ph:x"></iconify-icon>
+    </button>
+  </div>
+
+  <div class="cart-content">
+    <!-- Panier vide -->
+    <div *ngIf="cartItems.length === 0" class="empty-cart">
+      <iconify-icon icon="solar:cart-large-outline" class="empty-icon"></iconify-icon>
+      <h3>Votre panier est vide</h3>
+      <p>Ajoutez des produits pour commencer vos achats</p>
+      <button class="continue-shopping" (click)="onClose()">Continuer les achats</button>
+    </div>
+
+    <!-- Panier avec produits -->
+    <ng-container *ngIf="cartItems.length > 0">
+      <div class="cart-main">
+        <div class="cart-title">
+          <h2>Panier d'achats</h2>
+          <div class="cart-actions">
+            <span class="item-count">{{ cartItems.length }} ARTICLES</span>
+            <button class="clear-cart-btn" (click)="clearCart()">
+              <iconify-icon icon="ph:trash"></iconify-icon>
+              Vider le panier
+            </button>
+          </div>
+        </div>
+
+        <div class="cart-table-header">
+          <div class="col-item">Article</div>
+          <div class="col-size">Taille</div>
+          <div class="col-quantity">Quantité</div>
+          <div class="col-price">Prix</div>
+        </div>
+
+        <div class="cart-items">
+          <app-cart-item 
+            *ngFor="let item of cartItems"
+            [item]="item">
+          </app-cart-item>
+        </div>
+
+        <div class="free-shipping-notice">
+          Livraison gratuite pour toutes les commandes de plus de 100 000 Ar
+        </div>
+      </div>
+
+      <div class="cart-summary">
+        <h3>Résumé</h3>
+        
+        <div class="summary-row">
+          <span>Sous-total</span>
+          <span>{{ subtotal.toFixed(0) }} Ar</span>
+        </div>
+        
+        <div class="summary-row">
+          <span>Livraison</span>
+          <span>{{ shipping.toFixed(0) }} Ar</span>
+        </div>
+        
+        <div class="summary-row">
+          <span>TVA</span>
+          <span>{{ tax.toFixed(0) }} Ar</span>
+        </div>
+
+        <div class="promocode-section">
+          <label>Code promo</label>
+          <div class="promocode-input">
+            <input type="text" placeholder="Entrez le code">
+            <button class="apply-button">APPLIQUER</button>
+          </div>
+        </div>
+
+        <div class="total-row">
+          <span>Total</span>
+          <span class="total-amount">{{ total.toFixed(0) }} Ar</span>
+        </div>
+
+        <!-- Checkout Form -->
+        <div *ngIf="showCheckoutForm && !orderSuccess" class="checkout-form">
+          
+          <!-- Étape 1: Choix du mode de récupération -->
+          <div *ngIf="!showConfirmation">
+            <h4 style="margin-bottom: 16px; font-size: 1.1rem;">Choisir le mode de récupération</h4>
+            
+            <div class="delivery-options">
+              <label class="delivery-option" [class.selected]="deliveryType === 'RETRAIT'">
+                <input type="radio" name="deliveryType" value="RETRAIT" [(ngModel)]="deliveryType">
+                <div class="option-content">
+                  <span class="option-icon"><iconify-icon icon="solar:shop-outline"></iconify-icon></span>
+                  <div>
+                    <span class="option-title">Retrait en boutique</span>
+                    <span class="option-desc">Gratuit - Récupérez votre commande</span>
+                  </div>
+                </div>
+              </label>
+              
+              <label class="delivery-option" [class.selected]="deliveryType === 'LIVRAISON'">
+                <input type="radio" name="deliveryType" value="LIVRAISON" [(ngModel)]="deliveryType">
+                <div class="option-content">
+                  <span class="option-icon"><iconify-icon icon="solar:delivery-outline"></iconify-icon></span>
+                  <div>
+                    <span class="option-title">Livraison</span>
+                    <span class="option-desc">À domicile</span>
+                  </div>
+                </div>
+              </label>
+            </div>
+
+            <div class="checkout-actions" style="display: flex; gap: 12px; margin-top: 16px;">
+              <button class="cancel-btn" (click)="cancelCheckout()">Annuler</button>
+              <button class="confirm-btn" (click)="proceedToConfirmation()">Continuer</button>
+            </div>
+          </div>
+
+          <!-- Étape 2: Confirmation de la commande -->
+          <div *ngIf="showConfirmation" class="confirmation-step">
+            <h4 style="margin-bottom: 16px; font-size: 1.1rem;">Confirmer votre commande</h4>
+            
+            <div class="confirmation-summary">
+              <div class="confirmation-item">
+                <iconify-icon icon="solar:box-outline" style="font-size: 20px; color: #666;"></iconify-icon>
+                <span><strong>{{ cartItems.length }}</strong> article(s)</span>
+              </div>
+              <div class="confirmation-item">
+                <iconify-icon [icon]="deliveryType === 'RETRAIT' ? 'solar:shop-outline' : 'solar:delivery-outline'" style="font-size: 20px; color: #666;"></iconify-icon>
+                <span>{{ deliveryType === 'RETRAIT' ? 'Retrait en boutique' : 'Livraison à domicile' }}</span>
+              </div>
+              <div class="confirmation-item total">
+                <iconify-icon icon="solar:wallet-outline" style="font-size: 20px; color: #000;"></iconify-icon>
+                <span><strong>{{ total.toFixed(0) }} Ar</strong></span>
+              </div>
+            </div>
+
+            <p class="confirmation-message">
+              En confirmant, vous acceptez de passer cette commande. Le paiement sera effectué lors de la {{ deliveryType === 'RETRAIT' ? 'récupération en boutique' : 'livraison' }}.
+            </p>
+
+            <div *ngIf="orderError" class="error-message" style="color: #dc3545; padding: 12px; background: #f8d7da; border-radius: 8px; margin-top: 12px;">
+              {{ orderError }}
+            </div>
+
+            <div class="checkout-actions" style="display: flex; gap: 12px; margin-top: 16px;">
+              <button class="cancel-btn" (click)="backToDeliveryChoice()" [disabled]="isProcessing">Retour</button>
+              <button class="confirm-btn" (click)="confirmOrder()" [disabled]="isProcessing">
+                <iconify-icon *ngIf="!isProcessing" icon="solar:check-circle-outline" style="margin-right: 6px;"></iconify-icon>
+                {{ isProcessing ? 'Traitement...' : 'Confirmer la commande' }}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Success -->
+        <div *ngIf="orderSuccess" class="order-success" style="text-align: center; padding: 24px;">
+          <iconify-icon icon="mdi:check-circle" style="font-size: 64px; color: #28a745;"></iconify-icon>
+          <h3 style="margin: 16px 0 8px; color: #28a745;">Commande confirmée !</h3>
+          <p style="color: #666; margin-bottom: 8px;">Votre commande #{{ orderId.slice(-8) }} a été enregistrée</p>
+          <p style="color: #888; font-size: 0.9em; margin-bottom: 20px;">Statut: En attente de paiement</p>
+          <button class="checkout-button" (click)="continueShopping()">Continuer les achats</button>
+        </div>
+
+        <!-- Default checkout button -->
+        <button *ngIf="!showCheckoutForm && !orderSuccess" class="checkout-button" (click)="checkout()">PASSER LA COMMANDE</button>
+      </div>
+    </ng-container>
+  </div>
+</div>

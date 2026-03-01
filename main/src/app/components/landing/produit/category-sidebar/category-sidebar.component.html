@@ -1,0 +1,82 @@
+<aside class="category-sidebar">
+  <!-- Section Catégories -->
+  <div class="filter-section">
+    <h3 (click)="toggleCategories()" class="filter-header">
+      Catégorie 
+      <span class="toggle-icon" [class.expanded]="isCategoriesExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isCategoriesExpanded" [@slideDown]>
+      <ng-container *ngFor="let category of categories">
+        <label [class.selected]="category.checked" (click)="toggleCategory(category); $event.preventDefault()">
+          <input type="checkbox" [checked]="category.checked" (click)="$event.stopPropagation()"> 
+          <span>{{ category.name }}</span>
+          <span class="count" *ngIf="category.count">{{category.count}}</span>
+        </label>
+      </ng-container>
+    </div>
+  </div>
+  
+  <!-- Section Prix -->
+  <div class="filter-section">
+    <h3 (click)="togglePrice()" class="filter-header">
+      Prix 
+      <span class="toggle-icon" [class.expanded]="isPriceExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isPriceExpanded">
+      <label *ngFor="let range of priceRanges" 
+             [class.selected]="range.checked"
+             (click)="togglePriceRange(range); $event.preventDefault()">
+        <input type="checkbox" [checked]="range.checked" (click)="$event.stopPropagation()"> 
+        {{range.label}}
+      </label>
+    </div>
+  </div>
+  
+  <!-- Section Marques -->
+  <div class="filter-section">
+    <h3 (click)="toggleBrands()" class="filter-header">
+      Marques 
+      <span class="toggle-icon" [class.expanded]="isBrandsExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isBrandsExpanded">
+      <label *ngFor="let brand of brands" 
+             [class.selected]="brand.checked"
+             (click)="toggleBrand(brand); $event.preventDefault()">
+        <input type="checkbox" [checked]="brand.checked" (click)="$event.stopPropagation()"> 
+        {{brand.name}}
+        <span class="count">{{brand.count}}</span>
+      </label>
+    </div>
+  </div>
+  
+  <!-- Section Taille -->
+  <div class="filter-section">
+    <h3 (click)="toggleSizeSection()" class="filter-header">
+      Taille 
+      <span class="toggle-icon" [class.expanded]="isSizeExpanded">
+        <span class="iconify" data-icon="mdi:chevron-down"></span>
+      </span>
+    </h3>
+    <div class="filter-options" *ngIf="isSizeExpanded">
+      <label *ngFor="let size of sizes" 
+             [class.selected]="size.checked"
+             (click)="toggleSize(size); $event.preventDefault()">
+        <input type="checkbox" [checked]="size.checked" (click)="$event.stopPropagation()"> 
+        {{size.name}}
+      </label>
+    </div>
+  </div>
+  
+  <!-- Bouton Réinitialiser -->
+  <div class="filter-section" style="margin-top: 20px;">
+    <button class="clear-filters-btn" (click)="clearAllFilters()">
+      Réinitialiser les filtres
+    </button>
+  </div>
+</aside>

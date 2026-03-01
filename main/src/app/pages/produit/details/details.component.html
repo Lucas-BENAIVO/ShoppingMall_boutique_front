@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+
+<div class="details-page">
+  <div class="container">
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="loading-container" style="text-align: center; padding: 60px;">
+      <p>Chargement du produit...</p>
+    </div>
+
+    <!-- Error state -->
+    <div *ngIf="errorMessage && !isLoading" class="error-container" style="text-align: center; padding: 60px; color: #dc3545;">
+      <p>{{ errorMessage }}</p>
+      <a href="/landing/produit" style="color: #007bff;">Retour au catalogue</a>
+    </div>
+
+    <!-- Product content -->
+    <ng-container *ngIf="product && !isLoading">
+      <div class="breadcrumb-container">
+        <div class="breadcrumb">
+          <a href="/landing" class="breadcrumb-link">Page d'accueil</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="/landing/produit" class="breadcrumb-link">Catalogue</a>
+          <span class="breadcrumb-separator">›</span>
+          <span class="breadcrumb-current">{{ product.name }}</span>
+        </div>
+      </div>
+
+      <div class="product-section">
+        <app-product-images [product]="product"></app-product-images>
+        <app-product-info [product]="product"></app-product-info>
+      </div>
+
+      <app-related-products [currentProductId]="product._id" [categoryId]="product.categoryId"></app-related-products>
+    </ng-container>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,46 @@
+/* Remove space below trending categories block */
+.trending-header {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.trending-products-container {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+.trending-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px 0 48px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.trending-title {
+  font-size: 1.32rem;
+  font-weight: 700;
+  color: #222;
+  letter-spacing: -0.5px;
+}
+
+.trending-view-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #000;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: 500;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: gap 0.3s ease;
+  font-family: 'Poppins', 'Montserrat', Arial, sans-serif;
+}
+
+.trending-view-all:hover {
+  gap: 12px;
+}
+
+.trending-view-icon {
+  font-size: 20px;
+}

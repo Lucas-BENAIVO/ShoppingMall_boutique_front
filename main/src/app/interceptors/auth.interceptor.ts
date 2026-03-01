@@ -45,7 +45,7 @@ export class AuthInterceptor implements HttpInterceptor {
 
           // Appel API pour refresh le token
           return this.http.post<any>(
-            `${environment.apiNodeUrl}/api/auth/refresh`,
+            `${environment.apiNodeUrl}/api/mall/auth/refresh`,
             { refreshToken }
           ).pipe(
             switchMap(data => {
@@ -77,6 +77,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   private logout(): void {
     localStorage.clear();
-    window.location.href = '/login';
+    window.location.href = '/authentication/login';
   }
 }

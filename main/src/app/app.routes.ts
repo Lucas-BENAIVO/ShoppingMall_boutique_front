@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: '/authentication/login',
+        redirectTo: '/landing',
         pathMatch: 'full',
       },
       {
@@ -36,13 +36,13 @@ export const routes: Routes = [
     component: BlankComponent,
     children: [
       {
-        path: 'boutique',
+        path: 'landing',
         loadChildren: () =>
-          import('./pages/boutique/boutique.routes').then((m) => m.BoutiqueRoutes),
+          import('./pages/landing/landing.routes').then((m) => m.LandingRoutes),
       },
       {
         path: 'authentication',
-        loadChildren: () =>       
+        loadChildren: () =>
           import('./pages/authentication/authentication.routes').then(
             (m) => m.AuthenticationRoutes
           ),

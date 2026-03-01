@@ -5,16 +5,11 @@ import { AppSideRegisterComponent } from './side-register/side-register.componen
 
 export const AuthenticationRoutes: Routes = [
   {
-    path: '',
-    children: [
-      {
-        path: 'login',
-        component: AppSideLoginComponent,
-      },
-      {
-        path: 'register',
-        component: AppSideRegisterComponent,
-      },
-    ],
+    path: 'login',
+    component: AppSideLoginComponent,
+  },
+  {
+    path: 'register',
+    component: AppSideRegisterComponent,
   },
 ];

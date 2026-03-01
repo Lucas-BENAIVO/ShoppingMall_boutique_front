@@ -1,0 +1,16 @@
+<a [routerLink]="['/landing/produit', product?.id || product?._id || '']" class="product-card">
+  <div class="product-image-wrapper">
+    <span *ngIf="product?.onSale" class="sale-badge">SALE</span>
+    <div class="product-image" [style.background-image]="'url(' + (product?.image || '') + ')'"></div>
+  </div>
+  <div class="product-info">
+    <h4 class="product-title">{{product?.title || product?.name || 'Produit'}}</h4>
+    <div class="product-pricing">
+      <span class="product-price">{{product?.price || 0}} Ar</span>
+      <span *ngIf="product?.originalPrice" class="original-price">{{product?.originalPrice}} Ar</span>
+    </div>
+    <div class="product-colors" *ngIf="product?.colors">
+      <span class="color-label">{{product?.colors}} Colors</span>
+    </div>
+  </div>
+</a>

@@ -6,6 +6,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-side-login',
@@ -15,10 +16,13 @@ import { CommonModule } from '@angular/common';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppSideLoginComponent {
-  constructor(private router: Router) {}
+  errorMessage = '';
+  isLoading = false;
+
+  constructor(private router: Router, private authService: AuthService) {}
 
   form = new FormGroup({
-    uname: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    uname: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
 
@@ -27,6 +31,23 @@ export class AppSideLoginComponent {
   }
 
   submit() {
-    this.router.navigate(['']);
+    if (this.form.valid) {
+      this.isLoading = true;
+      this.errorMessage = '';
+      
+      const email = this.form.value.uname ?? '';
+      const password = this.form.value.password ?? '';
+
+      this.authService.login(email, password).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          this.router.navigate(['/landing']);
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.errorMessage = err.error?.message || 'Erreur de connexion. Vérifiez vos identifiants.';
+        }
+      });
+    }
   }
 }

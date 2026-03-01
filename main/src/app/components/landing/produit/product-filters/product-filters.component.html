@@ -1,0 +1,23 @@
+<div class="product-filters">
+  <div class="filters-left">
+    <div class="active-filters" *ngIf="activeFilters.length > 0">
+      <span class="filter-label">Filtres actifs:</span>
+      <span class="filter-tag" *ngFor="let filter of activeFilters; let i = index">
+        {{filter.label}} 
+        <button class="remove-filter" (click)="removeFilter(i)">×</button>
+      </span>
+      <button class="clear-all-btn" (click)="clearAllFilters()">Tout effacer</button>
+    </div>
+    <div *ngIf="activeFilters.length === 0" class="no-filters">
+      <span style="color: #888; font-size: 0.9em;">Aucun filtre appliqué</span>
+    </div>
+  </div>
+  <div class="sort-by">
+    <span>Trier par</span>
+    <select [(ngModel)]="selectedSort" (ngModelChange)="onSortChange()">
+      <option *ngFor="let option of sortOptions" [value]="option.value">
+        {{option.label}}
+      </option>
+    </select>
+  </div>
+</div>
