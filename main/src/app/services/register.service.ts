@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private API_URL = 'http://localhost:3000/api/mall/auth'; 
+  private API_URL = 'https://m1p13mean-henintsoa-lucas.onrender.com/api/mall/auth'; 
 
   constructor(private http: HttpClient) {}
 
